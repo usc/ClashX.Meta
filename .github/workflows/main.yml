@@ -25,7 +25,7 @@ jobs:
       with:
         repository: 'MetaCubeX/Clash.Meta'
         tag: "v1.15.1"
-        fileName: ".*darwin.*64-v.*.gz"
+        fileName: ".*darwin.*64-cgo-v.*.gz"
 
         # releaseId: "62870807"
         # fileName: ".*darwin.*64-alpha.*.gz"
