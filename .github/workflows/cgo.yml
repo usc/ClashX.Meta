@@ -25,7 +25,7 @@ jobs:
       with:
         repository: 'MetaCubeX/Clash.Meta'
         tag: "v1.16.0"
-        fileName: ".*darwin.*64-v.*.gz"
+        fileName: ".*darwin.*64-cgo-v.*.gz"
 
         # releaseId: "62870807"
         # fileName: ".*darwin.*64-alpha.*.gz"
@@ -51,20 +51,20 @@ jobs:
 
 
     - name: install deps
-      run: |
-        bash install_dependency.sh
-        xcodebuild -resolvePackageDependencies -project ClashX.xcodeproj
+      run: bash install_dependency.sh
         
 
     - name: build
       if: startsWith(github.ref, 'refs/tags/')
       run: |
+        xcodebuild -resolvePackageDependencies -project ClashX.xcodeproj
         xcodebuild archive -project ClashX.xcodeproj -scheme ClashX\ Meta -archivePath archive/ClashX.xcarchive -showBuildTimingSummary -allowProvisioningUpdates
 
 
     - name: build-SwiftUI
       run: |
-        xcodebuild archive -project ClashX.xcodeproj -scheme ClashX\ Meta\ SwiftUI -archivePath archive/ClashX\ SwiftUI.xcarchive -showBuildTimingSummary -allowProvisioningUpdates
+        xcodebuild -resolvePackageDependencies -project ClashX\ SwiftUI.xcodeproj
+        xcodebuild archive -project ClashX\ SwiftUI.xcodeproj -scheme ClashX\ Meta -archivePath archive/ClashX\ SwiftUI.xcarchive -showBuildTimingSummary -allowProvisioningUpdates
 
 
     - name: create zip
