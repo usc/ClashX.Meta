@@ -51,20 +51,20 @@ jobs:
 
 
     - name: install deps
-      run: bash install_dependency.sh
+      run: |
+        bash install_dependency.sh
+        xcodebuild -resolvePackageDependencies -project ClashX.xcodeproj
         
 
     - name: build
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        xcodebuild -resolvePackageDependencies -project ClashX.xcodeproj
         xcodebuild archive -project ClashX.xcodeproj -scheme ClashX\ Meta -archivePath archive/ClashX.xcarchive -showBuildTimingSummary -allowProvisioningUpdates
 
 
     - name: build-SwiftUI
       run: |
-        xcodebuild -resolvePackageDependencies -project ClashX\ SwiftUI.xcodeproj
-        xcodebuild archive -project ClashX\ SwiftUI.xcodeproj -scheme ClashX\ Meta -archivePath archive/ClashX\ SwiftUI.xcarchive -showBuildTimingSummary -allowProvisioningUpdates
+        xcodebuild archive -project ClashX.xcodeproj -scheme ClashX\ Meta\ SwiftUI -archivePath archive/ClashX\ SwiftUI.xcarchive -showBuildTimingSummary -allowProvisioningUpdates
 
 
     - name: create zip
